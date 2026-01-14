@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone Howl - Rock Band</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">STONE HOWL</div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link active">HJEM</a></li>
+                    <li><a href="#concerts" class="nav-link">KONSERTER</a></li>
+                    <li><a href="#music" class="nav-link">MUSIKK</a></li>
+                    <li><a href="#about" class="nav-link">OM OSS</a></li>
+                </ul>
+                <div class="theme-toggle" id="themeToggle">
+                    <span class="theme-icon" id="themeIcon">🌙</span>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hjem Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-image">
+                    <img src="stonehowlband.png" alt="Stone Howl Band">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-content">
+                    <h1 class="hero-title">STONE HOWL</h1>
+                    <p class="hero-tagline">Raw Rock Energy</p>
+                    <div class="hero-buttons">
+                        <a href="#music" class="btn btn-primary">Lytt nå</a>
+                        <a href="#concerts" class="btn btn-secondary">Se konserter</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <div class="container">
+                    <div class="preview-grid">
+                        <div class="preview-card">
+                            <h3>Kommende Konserter</h3>
+                            <p>Se hvor vi spiller neste gang</p>
+                            <a href="#concerts" class="preview-link">Les mer →</a>
+                        </div>
+                        <div class="preview-card">
+                            <h3>Siste Musikk</h3>
+                            <p>Stream våre nyeste sanger</p>
+                            <a href="#music" class="preview-link">Lytt nå →</a>
+                        </div>
+                        <div class="preview-card">
+                            <h3>Bandet</h3>
+                            <p>Møt medlemmene i Stone Howl</p>
+                            <a href="#about" class="preview-link">Om oss →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Konserter Section -->
+        <section id="concerts" class="section">
+            <div class="container">
+                <h2 class="section-title">KONSERTER</h2>
+                <div class="concerts-grid">
+                    <div class="concert-card">
+                        <div class="concert-date">
+                            <span class="day">15</span>
+                            <span class="month">FEB</span>
+                        </div>
+                        <div class="concert-info">
+                            <h3>Rockefeller</h3>
+                            <p class="concert-location">Oslo, Norge</p>
+                            <p class="concert-time">20:00</p>
+                            <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" class="concert-link" target="_blank">Kjøp billetter</a>
+                        </div>
+                    </div>
+                    
+                    <div class="concert-card">
+                        <div class="concert-date">
+                            <span class="day">22</span>
+                            <span class="month">FEB</span>
+                        </div>
+                        <div class="concert-info">
+                            <h3>Samfundet</h3>
+                            <p class="concert-location">Trondheim, Norge</p>
+                            <p class="concert-time">21:00</p>
+                            <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" class="concert-link" target="_blank">Kjøp billetter</a>
+                        </div>
+                    </div>
+                    
+                    <div class="concert-card">
+                        <div class="concert-date">
+                            <span class="day">08</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <div class="concert-info">
+                            <h3>Bergenhus Festning</h3>
+                            <p class="concert-location">Bergen, Norge</p>
+                            <p class="concert-time">19:00</p>
+                            <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvZjo5PgG0&start_radio=1" class="concert-link" target="_blank">Kjøp billetter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Musikk Section -->
+        <section id="music" class="section">
+            <div class="container">
+                <h2 class="section-title">MUSIKK</h2>
+                
+                <div class="playlists-section">
+                    <h3>Våre Playlists</h3>
+                    <div class="playlists-grid">
+                        <div class="playlist-card">
+                            <div class="playlist-cover">
+                                <div class="playlist-icon">🎸</div>
+                            </div>
+                            <div class="playlist-info">
+                                <h4>Heavy Rock</h4>
+                                <p>Hardtslående rock for maksimal energi</p>
+                                <a href="songs/heavy-rock.html" class="playlist-link">Lytt nå →</a>
+                            </div>
+                        </div>
+                        
+                        <div class="playlist-card">
+                            <div class="playlist-cover">
+                                <div class="playlist-icon">🎵</div>
+                            </div>
+                            <div class="playlist-info">
+                                <h4>Relax Rock</h4>
+                                <p>Akustiske og rolige rocklåter</p>
+                                <a href="songs/relax-rock.html" class="playlist-link">Lytt nå →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="music-grid">
+                    <div class="album-card">
+                        <img src="https://picsum.photos/seed/album1/300/300.jpg" alt="Album Cover" class="album-cover">
+                        <div class="album-info">
+                            <h3>Midnight Thunder</h3>
+                            <p>2023 • 10 sanger</p>
+                            <div class="album-links">
+                                <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" class="music-link" target="_blank">Spotify</a>
+                                <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" class="music-link" target="_blank">Apple Music</a>
+                                <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" class="music-link" target="_blank">YouTube</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="album-card">
+                        <img src="https://picsum.photos/seed/album2/300/300.jpg" alt="Album Cover" class="album-cover">
+                        <div class="album-info">
+                            <h3>Electric Dreams</h3>
+                            <p>2021 • 8 sanger</p>
+                            <div class="album-links">
+                                <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" class="music-link" target="_blank">Spotify</a>
+                                <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" class="music-link" target="_blank">Apple Music</a>
+                                <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" class="music-link" target="_blank">YouTube</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="latest-single">
+                    <h3>Siste Single</h3>
+                    <div class="single-player">
+                        <div class="single-info">
+                            <h4>Break the Chains</h4>
+                            <p>Utgitt: 15. Januar 2025</p>
+                        </div>
+                        <div class="player-controls">
+                            <button class="play-btn">▶</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Om Oss Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">OM OSS</h2>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Vår Historie</h3>
+                        <p>Stone Howl ble dannet i 2019 i Oslo med en visjon om å bringe tilbake den ekte, rå rock-energien. Med inspirasjon fra klassiske rock-ikoner som Led Zeppelin og Black Sabbath, kombinert med moderne alternativ rock, har bandet skapt sin egen unike sound.</p>
+                        <p>Siden starten har Stone Howl spilt på noen av Norges mest prestisjetunge scener og bygget opp en lojal fanskare som elsker deres intense live-opptredener og ærlige musikk.</p>
+                    </div>
+                </div>
+                
+                <div class="band-members">
+                    <h3>Medlemmer</h3>
+                    <div class="members-grid">
+                        <div class="member-card">
+                            <img src="erik-storm.png" alt="Vocalist" class="member-photo">
+                            <h4>Erik Storm</h4>
+                            <p>Vokal</p>
+                        </div>
+                        <div class="member-card">
+                            <img src="lars-hammer.png" alt="Guitarist" class="member-photo">
+                            <h4>Lars Hammer</h4>
+                            <p>Gitar</p>
+                        </div>
+                        <div class="member-card">
+                            <img src="tommy-stone.png" alt="Bassist" class="member-photo">
+                            <h4>Tommy Stone</h4>
+                            <p>Bass</p>
+                        </div>
+                        <div class="member-card">
+                            <img src="mikke-thunder.png" alt="Drummer" class="member-photo">
+                            <h4>Mikke Thunder</h4>
+                            <p>Trommer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">STONE HOWL</div>
+                <div class="social-links">
+                    <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" target="_blank">Facebook</a>
+                    <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" target="_blank">Instagram</a>
+                    <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxFZjo5PgG0&start_radio=1" target="_blank">Spotify</a>
+                    <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" target="_blank">YouTube</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Stone Howl. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

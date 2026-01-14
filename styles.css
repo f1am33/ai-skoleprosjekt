@@ -1,0 +1,922 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-black: #000000;
+    --dark-gray: #1a1a1a;
+    --medium-gray: #333333;
+    --light-gray: #666666;
+    --white: #ffffff;
+    --accent-red: #cc0000;
+    --accent-red-hover: #ff0000;
+    --gold: #ffd700;
+}
+
+[data-theme="light"] {
+    --primary-black: #ffffff;
+    --dark-gray: #f5f5f5;
+    --medium-gray: #e0e0e0;
+    --light-gray: #999999;
+    --white: #000000;
+    --accent-red: #cc0000;
+    --accent-red-hover: #ff0000;
+    --gold: #d4af37;
+}
+
+/* Theme transition animation */
+body {
+    transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+header, main, footer, .section {
+    transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.concert-card, .album-card, .member-card, .preview-card, .playlist-card {
+    transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary-black);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header og Navigation */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    color: var(--white);
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--light-gray);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    text-transform: uppercase;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--white);
+    text-shadow: 0 0 10px var(--accent-red);
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.6) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.theme-toggle.animating::before {
+    width: 100px;
+    height: 100px;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.theme-toggle.animating {
+    transform: scale(1.1) rotate(360deg);
+}
+
+.theme-icon {
+    font-size: 1.2rem;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+}
+
+.theme-toggle:hover .theme-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.theme-toggle.animating .theme-icon {
+    transform: scale(0) rotate(720deg);
+    opacity: 0;
+}
+
+
+
+/* Particle effect for theme change */
+.particle {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10000;
+}
+
+.particle::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+}
+
+.particle.active {
+    animation: particleFly 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes particleFly {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(var(--tx), var(--ty)) scale(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(var(--tx) * 2), calc(var(--ty) * 2)) scale(0.5);
+    }
+}
+
+/* Theme change ripple effect */
+.ripple {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+    opacity: 0.3;
+    z-index: 9999;
+    animation: rippleExpand 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes rippleExpand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.4;
+    }
+    100% {
+        width: 200vmax;
+        height: 200vmax;
+        opacity: 0;
+    }
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--white);
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* Main Content */
+main {
+    margin-top: 80px;
+}
+
+.section {
+    display: none;
+    min-height: 100vh;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--white);
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    letter-spacing: 3px;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 120vh;
+    overflow: hidden;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(204,0,0,0.3) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 8rem;
+    margin-bottom: 1rem;
+    color: var(--white);
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
+    letter-spacing: 5px;
+    animation: slideInFromTop 1s ease-out;
+}
+
+.hero-tagline {
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: slideInFromBottom 1s ease-out;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 2rem;
+    animation: slideInFromBottom 1.5s ease-out;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--accent-red);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: var(--accent-red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(204, 0, 0, 0.5);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--primary-black);
+    transform: translateY(-2px);
+}
+
+@keyframes slideInFromTop {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInFromBottom {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Preview Section */
+.preview-section {
+    padding: 4rem 0;
+    background: var(--dark-gray);
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.preview-card {
+    background: var(--medium-gray);
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--light-gray);
+}
+
+.preview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(204, 0, 0, 0.3);
+    border-color: var(--accent-red);
+}
+
+.preview-card h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+}
+
+.preview-link {
+    color: var(--accent-red);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.preview-link:hover {
+    color: var(--accent-red-hover);
+}
+
+/* Concerts Section */
+#concerts {
+    padding: 4rem 0;
+    background: var(--dark-gray);
+}
+
+.concerts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.concert-card {
+    background: var(--medium-gray);
+    border: 1px solid var(--light-gray);
+    display: flex;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.concert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(204, 0, 0, 0.3);
+    border-color: var(--accent-red);
+}
+
+.concert-date {
+    background: var(--accent-red);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+}
+
+.concert-date .day {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.concert-date .month {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.concert-info {
+    padding: 2rem;
+    flex: 1;
+}
+
+.concert-info h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+}
+
+.concert-location {
+    color: var(--light-gray);
+    margin-bottom: 0.5rem;
+}
+
+.concert-time {
+    color: var(--gold);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.concert-link {
+    color: var(--accent-red);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.concert-link:hover {
+    color: var(--accent-red-hover);
+}
+
+/* Music Section */
+#music {
+    padding: 4rem 0;
+    background: var(--dark-gray);
+}
+
+.playlists-section {
+    margin-bottom: 4rem;
+}
+
+.playlists-section h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--gold);
+}
+
+.playlists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.playlist-card {
+    background: var(--medium-gray);
+    border: 1px solid var(--light-gray);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.playlist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(204, 0, 0, 0.3);
+    border-color: var(--accent-red);
+}
+
+.playlist-cover {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(45deg, var(--accent-red), var(--dark-gray));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.playlist-icon {
+    font-size: 3rem;
+    color: var(--white);
+}
+
+.playlist-info {
+    padding: 2rem;
+    flex: 1;
+}
+
+.playlist-info h4 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+}
+
+.playlist-info p {
+    color: var(--light-gray);
+    margin-bottom: 1rem;
+}
+
+.playlist-link {
+    color: var(--accent-red);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.playlist-link:hover {
+    color: var(--accent-red-hover);
+}
+
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.album-card {
+    background: var(--medium-gray);
+    border: 1px solid var(--light-gray);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.album-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(204, 0, 0, 0.3);
+    border-color: var(--accent-red);
+}
+
+.album-cover {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.album-info {
+    padding: 2rem;
+}
+
+.album-info h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+}
+
+.album-info p {
+    color: var(--light-gray);
+    margin-bottom: 1rem;
+}
+
+.album-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.music-link {
+    background: var(--accent-red);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.music-link:hover {
+    background: var(--accent-red-hover);
+}
+
+.latest-single {
+    background: var(--medium-gray);
+    padding: 2rem;
+    border: 1px solid var(--light-gray);
+    text-align: center;
+}
+
+.latest-single h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--gold);
+}
+
+.single-player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.single-info h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.single-info p {
+    color: var(--light-gray);
+}
+
+.play-btn {
+    background: var(--accent-red);
+    color: var(--white);
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.play-btn:hover {
+    background: var(--accent-red-hover);
+    transform: scale(1.1);
+}
+
+/* About Section */
+#about {
+    padding: 4rem 0;
+    background: var(--dark-gray);
+}
+
+.about-content {
+    margin-bottom: 4rem;
+}
+
+.about-text h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--gold);
+}
+
+.about-text p {
+    color: var(--light-gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.band-members h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--gold);
+    text-align: center;
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.member-card {
+    background: var(--medium-gray);
+    border: 1px solid var(--light-gray);
+    text-align: center;
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(204, 0, 0, 0.3);
+    border-color: var(--accent-red);
+}
+
+.member-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--accent-red);
+}
+
+.member-card h4 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+}
+
+.member-card p {
+    color: var(--gold);
+    font-weight: 500;
+}
+
+/* Footer */
+footer {
+    background: var(--primary-black);
+    border-top: 1px solid var(--medium-gray);
+    padding: 3rem 0 1rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    color: var(--white);
+    letter-spacing: 2px;
+}
+
+.social-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.social-links a {
+    color: var(--light-gray);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent-red);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--medium-gray);
+}
+
+.footer-bottom p {
+    color: var(--light-gray);
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .theme-toggle {
+        margin-right: 1rem;
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--dark-gray);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 2rem 0;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu li {
+        margin: 1rem 0;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+    }
+    
+    .hero-tagline {
+        font-size: 1.2rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .concerts-grid,
+    .music-grid,
+    .members-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 1rem;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .concert-card {
+        flex-direction: column;
+    }
+    
+    .concert-date {
+        min-width: auto;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .single-player {
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
