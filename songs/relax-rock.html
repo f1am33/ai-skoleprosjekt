@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relax Rock Playlist - Stone Howl</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .playlist-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+        }
+        
+        .playlist-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .playlist-title {
+            font-size: 2.5em;
+            color: #44aaff;
+            margin-bottom: 10px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .back-link:hover {
+            color: #44aaff;
+        }
+        
+        .track-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .track-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #333;
+            transition: background 0.3s;
+        }
+        
+        .track-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .track-number {
+            width: 30px;
+            color: #888;
+            font-weight: bold;
+        }
+        
+        .track-info {
+            flex: 1;
+            margin-left: 20px;
+        }
+        
+        .track-title {
+            color: #fff;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .track-artist {
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .track-duration {
+            color: #888;
+            margin-left: auto;
+        }
+        
+        .play-btn {
+            background: #44aaff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: background 0.3s;
+        }
+        
+        .play-btn:hover {
+            background: #66ccff;
+        }
+        
+        .empty-playlist {
+            text-align: center;
+            color: #888;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="playlist-container">
+        <a href="../index.html#music" class="back-link">← Tilbake til musikk</a>
+        
+        <div class="playlist-header">
+            <h1 class="playlist-title">Relax Rock</h1>
+            <p>Akustiske og rolige rocklåter for avslappende stunder</p>
+        </div>
+        
+        <ul class="track-list" id="trackList">
+            <!-- MP3 files will be loaded here dynamically -->
+        </ul>
+        
+        <div class="empty-playlist" id="emptyMessage">
+            <p>Legg til MP3-filer i denne mappen for å se dem her</p>
+        </div>
+    </div>
+
+    <script>
+        // Load MP3 files from current directory
+        async function loadPlaylist() {
+            try {
+                // Get all MP3 files in current directory
+                const mp3Files = [
+                    'Eclipse Pulse.mp3',
+                    'Horizon.mp3',
+                    'Falling.mp3'
+                ].filter(filename => filename.endsWith('.mp3'));
+                
+                const trackList = document.getElementById('trackList');
+                const emptyMessage = document.getElementById('emptyMessage');
+                
+                if (mp3Files.length === 0) {
+                    emptyMessage.style.display = 'block';
+                    trackList.style.display = 'none';
+                    return;
+                }
+                
+                emptyMessage.style.display = 'none';
+                trackList.style.display = 'block';
+                trackList.innerHTML = '';
+                
+                mp3Files.forEach((filename, index) => {
+                    const trackName = filename.replace('.mp3', '').replace(/-/g, ' ').replace(/_/g, ' ');
+                    const li = document.createElement('li');
+                    li.className = 'track-item';
+                    li.innerHTML = `
+                        <span class="track-number">${index + 1}</span>
+                        <div class="track-info">
+                            <div class="track-title">${trackName}</div>
+                            <div class="track-artist">Stone Howl</div>
+                        </div>
+                        <audio id="audio-${index}" src="${filename}" preload="metadata"></audio>
+                        <span class="track-duration" id="duration-${index}">--:--</span>
+                        <button class="play-btn" onclick="playTrack(${index})">▶</button>
+                    `;
+                    trackList.appendChild(li);
+                    
+                    // Load metadata to get duration
+                    const audio = document.getElementById(`audio-${index}`);
+                    audio.addEventListener('loadedmetadata', () => {
+                        const duration = audio.duration;
+                        const minutes = Math.floor(duration / 60);
+                        const seconds = Math.floor(duration % 60);
+                        document.getElementById(`duration-${index}`).textContent = 
+                            `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading playlist:', error);
+                document.getElementById('emptyMessage').innerHTML = 
+                    '<p>Kunne ikke laste spilleliste. Legg til MP3-filer manuelt.</p>';
+            }
+        }
+        
+        let currentlyPlaying = null;
+        
+        function playTrack(index) {
+            const audio = document.getElementById(`audio-${index}`);
+            const button = event.target;
+            
+            // Stop currently playing track
+            if (currentlyPlaying && currentlyPlaying !== audio) {
+                currentlyPlaying.pause();
+                currentlyPlaying.currentTime = 0;
+                // Reset previous button
+                const prevButton = document.querySelector(`button[onclick="playTrack(${Array.from(document.querySelectorAll('audio')).indexOf(currentlyPlaying)})"]`);
+                if (prevButton) prevButton.textContent = '▶';
+            }
+            
+            if (audio.paused) {
+                audio.play();
+                button.textContent = '⏸';
+                currentlyPlaying = audio;
+            } else {
+                audio.pause();
+                button.textContent = '▶';
+                currentlyPlaying = null;
+            }
+        }
+        
+        // Load playlist when page loads
+        document.addEventListener('DOMContentLoaded', loadPlaylist);
+    </script>
+</body>
+</html>
